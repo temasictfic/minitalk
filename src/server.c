@@ -6,12 +6,19 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 03:29:44 by sciftci           #+#    #+#             */
-/*   Updated: 2022/08/15 04:10:08 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/08/23 15:58:27 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "../inc/minitalk.h"
 
+/*
+  Function checks if the string message is totaly received.
+  In case the null terminator string is received, prints the whole string
+  and frees from heap memory the string, and informs client that message was
+  received (client will then exit), with send_bit() without signal expecting 
+  to be received back from client
+*/
 static void	msg_received(t_protocol *t_server, size_t *i, pid_t client_pid)
 {
 	if (t_server->bits == 8 && t_server->flag == 1)
@@ -33,6 +40,11 @@ static void	msg_received(t_protocol *t_server, size_t *i, pid_t client_pid)
 	}
 }
 
+/*
+  Function checks if the string length bits are done
+  If yes, the length is printed to stdout and used to allocated in the 
+  heap memory a string with the exact size received (plus the null terminator)
+*/
 static void	msg_len_received(t_protocol *t_server)
 {
 	if (t_server->bits == sizeof(int) * 8 && t_server->flag == 0)
@@ -52,6 +64,14 @@ static void	msg_len_received(t_protocol *t_server)
 	}
 }
 
+/*
+  Function catches SIGUSR1 and SIGUSR2 signals received from client that
+  represents the status of each bit (either 0 or 1)
+  Variables declared as static are initialized with zero, and after each 
+  8 bits received they are again re-initialized to zero
+  For each bit received from client, the server sends an ACK signal
+  (then the client should only send the next bit after this ACK signal)
+*/
 static void	server_handler(int sig, siginfo_t *info, void *context)
 {
 	static t_protocol	t_server;
@@ -72,6 +92,23 @@ static void	server_handler(int sig, siginfo_t *info, void *context)
 	send_bit(info->si_pid, 0, 0);
 }
 
+/*
+  This program (server) prints to stdout the PID process and keeps
+  listening for incoming message transmissions
+  
+  Each client should use the following sequence:
+         (int)              (char)               (char)
+    length of message -> regular chars -> null string terminator char
+  The string message is only printed to stdout when the full string is received
+  For each signal received from client, this program (server) sends
+  a corresponding signal back
+  
+  Using sigaction structure to define which signals to catch by the handler
+  The infinite loop will just keep the process running
+  
+  The pause() function causes the calling thread to pause until a
+  signal is received
+*/
 int	main(void)
 {
 	struct sigaction	s_server;

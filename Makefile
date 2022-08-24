@@ -6,7 +6,7 @@
 #    By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/15 04:11:55 by sciftci           #+#    #+#              #
-#    Updated: 2022/08/15 14:52:35 by sciftci          ###   ########.fr        #
+#    Updated: 2022/08/23 16:10:48 by sciftci          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,13 +21,14 @@ SRC_DIR = src
 SRCB_DIR = srcb
 INC_DIR = inc
 
+
 SRC_SERVER := src/server.c src/minitalk.c src/minitalk_utils.c
 SRC_CLIENT := src/client.c src/minitalk.c src/minitalk_utils.c
 
-SRC_SERVER_BONUS := srcb/server_bonus.c srcb/minitalk_bonus.c src/minitalk_utils.c
-SRC_CLIENT_BONUS := srcb/client_bonus.c srcb/minitalk_bonus.c src/minitalk_utils.c
+SRC_SERVER_BONUS := srcb/server_bonus.c srcb/minitalk_bonus.c srcb/minitalk_utils_bonus.c
+SRC_CLIENT_BONUS := srcb/client_bonus.c srcb/minitalk_bonus.c srcb/minitalk_utils_bonus.c
 
-#=====================================================================================
+#========================================================================================
 
 all: $(NAME_SERVER) $(NAME_CLIENT)
 

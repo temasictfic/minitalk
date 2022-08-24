@@ -6,11 +6,11 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 02:23:49 by sciftci           #+#    #+#             */
-/*   Updated: 2022/08/15 03:24:23 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/08/23 16:04:18 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk_bonus.h"
+#include "../inc/minitalk_bonus.h"
 
 void	check_sigaction_signals(struct sigaction *sa)
 {

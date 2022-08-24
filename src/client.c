@@ -6,12 +6,24 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 02:26:19 by sciftci           #+#    #+#             */
-/*   Updated: 2022/08/15 03:22:04 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/08/23 15:59:00 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "../inc/minitalk.h"
 
+/*
+  Function handles the SIGUSR1/SIGUSR2 signals received from server
+  
+  To be noted that the server will only send a signal upon receiving a 
+  signal from server, as explained below:
+  - Client sends a bit to server, and (normally) waits a reply - using pause()
+  and then
+  - The server sends a signal to confirm that each bit was received (ACK)
+  or
+  - The server sends a signal to confirm that the NULL terminator was received
+  (end of string message), and then the function exits
+*/
 static void	client_handler(int sig)
 {
 	if (sig == SIGUSR1)
@@ -23,6 +35,13 @@ static void	client_handler(int sig)
 	}
 }
 
+/*
+  Function sends the length of the string to server, and then sends the
+  string itself, including the null terminator
+  
+  Note: in the particular case of a null string, it will be sent
+  zero as length and then the null terminator string
+*/
 static void	client_send_message(pid_t server_pid, char *str)
 {
 	size_t	i;
@@ -39,6 +58,16 @@ static void	client_send_message(pid_t server_pid, char *str)
 	send_char(server_pid, '\0');
 }
 
+/*
+  This program (client) sends a string message to another process (server)
+  The arguments passed from command line are checked if valid
+  - string and PID server arguments must be passed, and not more or less
+  - PID server must be valid, kill() and ft_atoi() are used to check this
+  (not only it must be a valid number as it must be an existing process)
+  The sigaction structure is used to catch the user defined signals and 
+  take care of the communication with server. Basically for each signal
+  sent from client, a reply signal is expected to be received from server
+*/
 int	main(int argc, char **argv)
 {
 	struct sigaction	s_client;

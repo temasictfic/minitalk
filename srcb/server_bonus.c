@@ -6,11 +6,11 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 04:10:32 by sciftci           #+#    #+#             */
-/*   Updated: 2022/08/15 04:10:49 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/08/23 15:59:37 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk_bonus.h"
+#include "../inc/minitalk_bonus.h"
 
 static void	msg_received(t_protocol *t_server, size_t *i, pid_t client_pid)
 {

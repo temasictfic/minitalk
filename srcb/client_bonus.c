@@ -6,11 +6,11 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 03:06:23 by sciftci           #+#    #+#             */
-/*   Updated: 2022/08/15 03:22:31 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/08/24 04:05:57 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk_bonus.h"
+#include "../inc/minitalk_bonus.h"
 
 static void	client_handler(int sig)
 {
