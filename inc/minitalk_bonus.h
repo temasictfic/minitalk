@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:56:16 by sciftci           #+#    #+#             */
-/*   Updated: 2022/08/15 04:06:57 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/09/08 15:37:05 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void		send_bit(pid_t pid, char bit, char flag_to_pause);
   data : data received, can be an int (length of message) or char
   flag : 1 if length of message was received, else 0
   message : message received
+  index : message index
 */
 typedef struct s_protocol
 {
@@ -44,6 +45,7 @@ typedef struct s_protocol
 	int		data;
 	int		flag;
 	char	*message;
+	size_t	index;
 }			t_protocol;
 
 #endif
