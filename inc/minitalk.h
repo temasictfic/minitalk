@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:43:30 by sciftci           #+#    #+#             */
-/*   Updated: 2022/09/08 15:37:09 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/09/11 14:05:25 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void		send_bit(pid_t pid, char bit, char flag_to_pause);
   Structure to handle the protocol between server-client
   
   bits : bits received
-  data : data received, can be an int (length of message) or char
+  data : data received, can be an length of message or char
   flag : 1 if length of message was received, else 0
   message : message received
   index : message index
@@ -42,10 +42,10 @@ void		send_bit(pid_t pid, char bit, char flag_to_pause);
 typedef struct s_protocol
 {
 	int		bits;
-	int		data;
-	int		flag;
-	char	*message;
-	size_t	index;
+	unsigned int		data;
+	//int		flag;
+	//char*	message;
+  //int   index;
 }			t_protocol;
 
 #endif

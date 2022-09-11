@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:56:16 by sciftci           #+#    #+#             */
-/*   Updated: 2022/09/08 15:37:05 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/09/10 00:55:49 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,12 @@ void		send_bit(pid_t pid, char bit, char flag_to_pause);
 */
 typedef struct s_protocol
 {
-	int		bits;
-	int		data;
+	int	bits;
+	int	len;
+	char	c;
 	int		flag;
 	char	*message;
-	size_t	index;
+	int	index;
 }			t_protocol;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 03:29:44 by sciftci           #+#    #+#             */
-/*   Updated: 2022/09/08 18:04:15 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/09/11 16:15:02 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,21 @@
 */
 static void	msg_received(t_protocol *t_server, pid_t client_pid)
 {
-	if (t_server->bits == 8 && t_server->flag == 1)
+	if (t_server->bits == 8)
 	{
-		t_server->message[t_server->index] = t_server->data;
-		t_server->index++;
+		//t_server->message[t_server->index] = t_server->data;
+		
+		//t_server->index++;
+		ft_putstr_fd((char *)&t_server->data, 1);
 		if (t_server->data == '\0')
 		{
-			ft_putstr_fd("\e[92mreceived message = [", 1);
-			ft_putstr_fd(t_server->message, 1);
-			ft_putstr_fd("]\n\e[0m", 1);
-			free(t_server->message);
-			t_server->message = NULL;
-			t_server->flag = 0;
-			t_server->index = 0;
+			ft_putstr_fd("\n\e[92mreceived message\n\e[0m", 1);
+			//ft_putstr_fd("\e[92mreceived message = [", 1);
+			//ft_putstr_fd(t_server->message, 1);
+			//ft_putstr_fd("]\n\e[0m", 1);
+			//free(t_server->message);
+			//t_server->message = NULL;
+			//t_server->index = 0;
 			send_bit(client_pid, 1, 0);
 		}
 		t_server->bits = 0;
@@ -44,7 +46,7 @@ static void	msg_received(t_protocol *t_server, pid_t client_pid)
   Function checks if the string length bits are done
   If yes, the length is printed to stdout and used to allocated in the 
   heap memory a string with the exact size received (plus the null terminator)
-*/
+*//*
 static void	msg_len_received(t_protocol *t_server)
 {
 	if (t_server->bits == sizeof(int) * 8 && t_server->flag == 0)
@@ -62,7 +64,7 @@ static void	msg_len_received(t_protocol *t_server)
 		t_server->message[t_server->data] = '\0';
 		t_server->bits = 0;
 	}
-}
+}*/
 
 /*
   Function catches SIGUSR1 and SIGUSR2 signals received from client that
@@ -75,19 +77,22 @@ static void	msg_len_received(t_protocol *t_server)
 static void	server_handler(int sig, siginfo_t *info, void *context)
 {
 	static t_protocol	t_server;
+	static int			id = 0;
 
 	usleep(WAIT_TIME);
+	if (info->si_pid != 0)
+		id = info->si_pid;
 	(void)context;
 	if (t_server.bits == 0)
 		t_server.data = 0;
-	if (sig == SIGUSR2 && t_server.flag == 0)
-		t_server.data |= 1 << (((sizeof(int) * 8) - 1) - t_server.bits);
-	else if (sig == SIGUSR2 && t_server.flag == 1)
+	//if (sig == SIGUSR2 && t_server.flag == 0)
+		//t_server.data |= 1 << (((sizeof(int) * 8) - 1) - t_server.bits);
+	if (sig == SIGUSR2)
 		t_server.data |= 1 << (((sizeof(char) * 8) - 1) - t_server.bits);
 	t_server.bits++;
-	msg_len_received(&t_server);
-	msg_received(&t_server, info->si_pid);
-	send_bit(info->si_pid, 0, 0);
+	//msg_len_received(&t_server);
+	msg_received(&t_server, id);
+	send_bit(id, 0, 0);
 }
 
 /*
@@ -113,7 +118,7 @@ int	main(void)
 
 	sigemptyset(&s_server.sa_mask);
 	s_server.sa_sigaction = server_handler;
-	s_server.sa_flags = SA_SIGINFO | SA_RESTART;
+	s_server.sa_flags = SA_SIGINFO;
 	check_sigaction_signals(&s_server);
 	ft_putstr_fd("\e[92mserver [PID = ", 1);
 	ft_putnbr_fd(getpid(), 1);
