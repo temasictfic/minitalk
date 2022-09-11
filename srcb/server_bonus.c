@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 04:10:32 by sciftci           #+#    #+#             */
-/*   Updated: 2022/09/11 21:02:07 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/09/11 21:29:11 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	msg_received(t_protocol *t_server, pid_t client_pid)
 			ft_putstr_fd(t_server->message, 1);
 			if (t_server->data == '\0')
 			{
-				ft_putstr_fd("\n\e[92m/*\\received message\n\e[0m", 1);
+				ft_putstr_fd("\n\e[92m/*\\received message/*\\\n\e[0m", 1);
 				send_bit(client_pid, 1, 0);
 			}
 			free(t_server->message);
