@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 01:56:12 by sciftci           #+#    #+#             */
-/*   Updated: 2022/08/23 15:58:40 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/09/11 19:52:03 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,6 @@ void	check_sigaction_signals(struct sigaction *sa)
   by using flag = 1 on the send_bit()
   Assumed 1 byte = 8 bits
 */
-void	send_len(pid_t pid, int len)
-{
-	int		shift;
-	char	bit;
-
-	shift = (sizeof(int) * 8) - 1;
-	while (shift >= 0)
-	{
-		bit = (len >> shift) & 1;
-		send_bit(pid, bit, 1);
-		shift--;
-	}
-}
-
-/*
-  Functions sends an integer containing the length of the message
-  For each bit sent client, waits a signal received back before proceeding
-  by using flag = 1 on the send_bit()
-  Assumed 1 byte = 8 bits
-*/
 void	send_char(pid_t pid, char c)
 {
 	int		shift;
@@ -73,7 +53,7 @@ void	send_char(pid_t pid, char c)
 
 /*
   Function sends a bit (0 or 1) to the process PID
-  Return from function will happen after ACK signal is received in case
+  Return from function will happen after ack signal is received in case
   the pause flag is set to non zero, otherwise return immediately
 */
 void	send_bit(pid_t pid, char bit, char pause_flag)

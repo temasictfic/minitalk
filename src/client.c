@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 02:26:19 by sciftci           #+#    #+#             */
-/*   Updated: 2022/09/11 14:14:32 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/09/11 19:53:22 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,38 +19,31 @@
   signal from server, as explained below:
   - Client sends a bit to server, and (normally) waits a reply - using pause()
   and then
-  - The server sends a signal to confirm that each bit was received (ACK)
+  - The server sends a signal to confirm that each bit was received (ack)
   or
   - The server sends a signal to confirm that the NULL terminator was received
   (end of string message), and then the function exits
+  
+  else if (sig == SIGUSR1)
+	ft_putstr_fd("\e[33m > beat signal received from server\n\e[0m", 1);
 */
 static void	client_handler(int sig)
 {
-	//if (sig == SIGUSR1)
-		//ft_putstr_fd("\e[33m > ACK signal received from server\n\e[0m", 1);
 	if (sig == SIGUSR2)
 	{
-		ft_putstr_fd("\e[92m > end of msg signal received from server\n\e[0m", 1);
+		ft_putstr_fd("\e[92m#end of msg signal received from server\n\e[0m", 1);
 		exit(EXIT_SUCCESS);
 	}
 }
 
 /*
-  Function sends the length of the string to server, and then sends the
-  string itself, including the null terminator
-  
-  Note: in the particular case of a null string, it will be sent
-  zero as length and then the null terminator string
+  Function sends the string itself, including the null terminator
 */
 static void	client_send_message(pid_t server_pid, char *str)
 {
 	size_t	i;
 
 	i = 0;
-	//ft_putstr_fd("\e[92msending length = [", 1);
-	//ft_putnbr_fd(ft_strlen(str), 1);
-	//ft_putstr_fd("]\n\e[0m", 1);
-	//send_len(server_pid, ft_strlen(str));
 	ft_putstr_fd("\e[92msending message\n\e[0m", 1);
 	while (str[i] != '\0')
 		send_char(server_pid, str[i++]);
