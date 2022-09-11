@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:43:30 by sciftci           #+#    #+#             */
-/*   Updated: 2022/09/11 17:46:39 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/09/11 21:02:30 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ typedef struct s_protocol
 	int				bits;
 	unsigned int	data;
 	char			*message;
-	size_t			byte;
 	size_t			index;
 }					t_protocol;
 

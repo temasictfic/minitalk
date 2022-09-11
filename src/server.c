@@ -6,12 +6,12 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 03:29:44 by sciftci           #+#    #+#             */
-/*   Updated: 2022/09/11 18:24:13 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/09/11 21:23:07 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minitalk.h"
-#include <stdio.h>
+
 /*
   Function checks if the string message is totaly received.
   In case the null terminator string is received, prints the whole string
@@ -32,13 +32,9 @@ static void	msg_received(t_protocol *t_server, pid_t client_pid)
 		if (t_server->index == BUFFER_SIZE - 1 || t_server->data == '\0')
 		{
 			ft_putstr_fd(t_server->message, 1);
-			t_server->byte += t_server->index;
 			if (t_server->data == '\0')
 			{
-				ft_putstr_fd("\n\e[92m/*\\received message\nbyte number of message => \e[0m", 1);
-				ft_putnbr_fd(t_server->byte, 1);
-				ft_putchar_fd('\n', 1);
-				t_server->byte = 0;
+				ft_putstr_fd("\n\e[92m/*\\received message\n\e[0m", 1);
 				send_bit(client_pid, 1, 0);
 			}
 			free(t_server->message);
